@@ -1,6 +1,6 @@
-import gameboard from '../src/gameboard';
+import gameBoard from '../src/gameBoard';
 
-const board = gameboard(10);
+const board = gameBoard(10);
 const coord = [0, 2];
 const length = 5;
 const coord2 = [1, 2];
@@ -52,8 +52,6 @@ test('Place ship: wrong coordinate inputs', () => {
 });
 
 test(`Receive attack: ${coord} on ship0`, () => {
-	const row = coord[0];
-	const col = coord[1];
 	board.receiveAttack(coord);
 	expect(board.ships[0].shipObj.hits).toEqual([1, 0, 0, 0, 0]);
 });
@@ -63,4 +61,23 @@ test(`Missed attack: [0, 1]`, () => {
 	const col = 1;
 	board.receiveAttack([row, col]);
 	expect(board.missedAttacks).toContainEqual([0, 1]);
+});
+
+test(`Missed attack: [9, 9]`, () => {
+	const row = 9;
+	const col = 9;
+	board.receiveAttack([row, col]);
+	expect(board.missedAttacks).toContainEqual([9, 9]);
+});
+
+test(`All sunk: false`, () => {
+	expect(board.allSunk()).toBe(false);
+});
+
+test(`All sunk: true`, () => {
+	for (let i = 0; i < length; i++) {
+		board.receiveAttack([0, 2 + i]);
+		board.receiveAttack([1 + i, 2]);
+	}
+	expect(board.allSunk()).toBe(true);
 });

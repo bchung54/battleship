@@ -1,6 +1,6 @@
 import ship from './ship';
 
-function gameboard(size) {
+function gameBoard(size) {
 	const grid = Array.from(Array(size), () => new Array(size).fill(-1));
 	const ships = [];
 	const missedAttacks = [];
@@ -53,7 +53,13 @@ function gameboard(size) {
 		attackedShip.shipObj.hit(hitPosition);
 	}
 
-	function allSunk() {}
+	function allSunk() {
+		const afloat = ships.some((element) => !element.shipObj.isSunk());
+		if (afloat) {
+			return false;
+		}
+		return true;
+	}
 
 	return {
 		grid,
@@ -65,4 +71,4 @@ function gameboard(size) {
 	};
 }
 
-export default gameboard;
+export default gameBoard;
