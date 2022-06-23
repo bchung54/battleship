@@ -29,13 +29,13 @@ export var bot = Object.create(player(-1, 'bot'), {
 			} while (this.attackLog.includes([row, col]));
 
 			this.attackLog.push([row, col]);
-			console.log([row, col]);
 			return [row, col];
 		}
 	},
 	playTurn: {
 		value: function (oppBoard) {
-			oppBoard.receiveAttack(this.pickCoord());
+			const target = this.pickCoord();
+			return oppBoard.receiveAttack(target);
 		}
 	}
 });

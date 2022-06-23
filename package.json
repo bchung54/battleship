@@ -7,13 +7,16 @@
 		"test": "tests"
 	},
 	"scripts": {
-		"test": "jest --coverage"
+		"test": "jest --coverage",
+		"build": "webpack --config webpack.config.js",
+		"watch": "webpack --watch"
 	},
 	"author": "bchung54",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/preset-env": "^7.18.2",
 		"css-loader": "^6.7.1",
+		"html-webpack-plugin": "^5.5.0",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^28.1.1",
 		"style-loader": "^3.3.1",

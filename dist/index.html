@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>Battleship</title>
+  <link rel='stylesheet' href='../src/reset.css'>
+  <link rel='stylesheet' href='../src/style.css'>
+<script defer src="main.js"></script></head>
+<body>
+  <header><h1>Battleship</h1></header>
+  <div class="start-menu">
+    <button id="1p-button" class="start-option">1 Player</button>
+    <button id="2p-button" class="start-option">2 Players</button>
+  </div>
+  <form class="place-ships">
+    <div>
+      <label for="ship1">Coordinates for Patrol Boat (size: 2)</label>
+      <input type="text" id="ship1" placeholder="A1" pattern="[a-jA-J]\d">
+      <label for="orientation1">Check for horizontal (otherwise vertical)</label>
+      <input type="checkbox" id="orientation1">
+    </div>
+
+    <div>
+      <label for="ship2">Coordinates for Destroyer (size: 3)</label>
+      <input type="text" id="ship2" placeholder="B2" pattern="[a-jA-J]\d">
+      <label for="orientation2">Check for horizontal (otherwise vertical)</label>
+      <input type="checkbox" id="orientation2">
+    </div>
+
+    <div>
+      <label for="ship3">Coordinates for Submarine (size: 3)</label>
+      <input type="text" id="ship3" placeholder="C3" pattern="[a-jA-J]\d">
+      <label for="orientation3">Check for horizontal (otherwise vertical)</label>
+      <input type="checkbox" id="orientation3">
+    </div>
+
+    <div>
+      <label for="ship4">Coordinates for Battleship (size: 4)</label>
+      <input type="text" id="ship4" placeholder="D4" pattern="[a-jA-J]\d">
+      <label for="orientation4">Check for horizontal (otherwise vertical)</label>
+      <input type="checkbox" id="orientation4">
+    </div>
+
+    <div>
+      <label for="ship5">Coordinates for Cruiser (size: 5)</label>
+      <input type="text" id="ship5" placeholder="F5" pattern="[a-jA-J]\d">
+      <label for="orientation5">Check for horizontal (otherwise vertical)</label>
+      <input type="checkbox" id="orientation5">
+    </div>
+    <input type="submit" value="Start Game">
+  </form>
+
+  <div class="content">
+    <div id="player1" class="player">
+      <h2>Player 1</h2>
+    </div>
+    <div id="player2" class="player">
+      <h2>Player 2</h2>
+    </div>
+  </div>
+
+  <div class="bg-modal">
+    <div class="modal">
+      <div class="close">+</div>
+      <div class="message"></div>
+      <button class="replay">Replay</button>
+    </div>
+  </div>
+</body>
+</html>

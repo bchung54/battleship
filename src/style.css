@@ -1,0 +1,118 @@
+@font-face {
+    font-family: SpaceCruiser;
+    src: url(./fonts/spacec/Spacec5.ttf);
+}
+header {
+    height: 10%;
+    background-color: slategray;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+h1 {
+    font-family: SpaceCruiser, system-ui, -apple-system;
+    font-size: 3.5rem;
+}
+
+.start-menu {
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    font-family: SpaceCruiser, system-ui, -apple-system;
+    font-size: 2rem;
+    border: 10px solid slategray;
+}
+
+form {
+    display: none;
+    flex-direction: column;
+}
+
+.content {
+    display: none;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+
+#player2 {
+    display: none;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+.grid-display {
+    display: grid;
+    grid-template: repeat(10, 1fr) /repeat(10, 1fr);
+    border: 2px solid grey;
+    border-radius: 10px;
+    padding: 1.5rem;
+}
+
+.cell {
+    height: 1.5rem;
+    width: 1.5rem;
+    border: 2px solid black;
+    background-color: aqua;
+}
+
+.opponent .cell:hover {
+    opacity: 0.5;
+}
+
+.ship {
+    background-color: green;
+}
+
+.hit {
+    background-color: red;
+    opacity: 0.5;
+}
+
+.miss {
+    background-color: white;
+    opacity: 0.5;
+}
+
+/* Modal */
+
+.bg-modal {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    width: 800px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 32px;
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 14px;
+    font-size: 50px;
+    transform: rotate(45deg);
+    cursor: pointer;
+}
