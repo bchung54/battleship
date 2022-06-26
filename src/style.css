@@ -14,9 +14,18 @@ h1 {
     font-size: 3.5rem;
 }
 
-.start-menu {
+.start {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10rem;
+    text-align: center;
+    font-size: 2rem;
+}
+
+input {
+    font-size: 2rem;
+    text-align: center;
 }
 
 button {
@@ -26,7 +35,7 @@ button {
 }
 
 form {
-    display: none;
+    display: flex;
     flex-direction: column;
 }
 
@@ -41,17 +50,13 @@ form {
     flex: 1;
 }
 
-#player2 {
-    display: none;
-}
-
 h2 {
     font-size: 2.5rem;
 }
 
-.grid-display {
+.grid {
     display: grid;
-    grid-template: repeat(10, 1fr) /repeat(10, 1fr);
+    grid-template: repeat(10, 1fr) /repeat(10, fit-content(1.5rem));
     border: 2px solid grey;
     border-radius: 10px;
     padding: 1.5rem;
@@ -84,7 +89,8 @@ h2 {
 
 /* Modal */
 
-.bg-modal {
+.bgmodal {
+    display: none;
     position: absolute;
     top: 0;
     display: flex;
@@ -97,7 +103,7 @@ h2 {
 
 .modal {
     position: relative;
-    display: flex;
+    display: none;
     flex-direction: column;
     height: 300px;
     width: 800px;

@@ -22,4 +22,5 @@ test('Bot: make move', () => {
 	const newBoard = gameBoard(10);
 	bot.playTurn(newBoard);
 	expect(bot.attackLog).toBeTruthy();
+	console.log(bot.attackLog);
 });
