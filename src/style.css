@@ -1,10 +1,29 @@
+:root{
+    --header-color: rgb(42, 72, 102);
+    --body-color: rgb(73, 128, 184);
+}
+
 @font-face {
     font-family: SpaceCruiser;
     src: url(./fonts/spacec/Spacec5.ttf);
 }
+
+@font-face {
+    font-family: Machine;
+    src: url(./fonts/machine-gunk-font/MachineGunk-nyqg.ttf);
+}
+
+body {
+    height: 100vh;
+    background-color: var(--body-color);
+}
+
 header {
-    height: 10%;
-    background-color: slategray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+    background-color: var(--header-color);
     padding: 0.5rem;
     text-align: center;
 }
@@ -14,6 +33,12 @@ h1 {
     font-size: 3.5rem;
 }
 
+h3 {
+    font-family: Machine, system-ui, -apple-system;
+    color: silver;
+    font-size: 3rem;
+}
+
 .start {
     display: flex;
     flex-direction: column;
@@ -21,6 +46,8 @@ h1 {
     padding: 10rem;
     text-align: center;
     font-size: 2rem;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: rgb(90, 90, 90);
 }
 
 input {
@@ -39,34 +66,182 @@ form {
     flex-direction: column;
 }
 
-.content {
-    display: none;
+.name-form * {
+    font-family: Machine, system-ui, -apple-system;
+    color: rgb(158, 158, 158);
 }
 
-.player {
+.name-form > input[type="submit"] {
+    background-color: rgb(42, 72, 102);
+}
+
+.content {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 10rem;
+}
+
+.display {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    font-size: 2rem;
+}
+
+fieldset {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    flex: 1;
+}
+
+fieldset * {
+    margin-bottom: 0.75rem;
+}
+
+/* Slider */
+
+.orientation {
+    width: 100%;
+}
+
+input[type="radio"] {
+    display: none;
+    margin-bottom: 0.5rem;
+}
+
+input[type="radio"]:checked+label {
+    animation: blink 1.5s infinite;
+}
+
+.switch {
+    position: relative;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(204, 126, 126);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked+.slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+@keyframes blink {
+    0% {
+        color: black;
+    }
+    50% {
+        color: silver;
+    }
+    100% {
+        color: black;
+    }
 }
 
 h2 {
     font-size: 2.5rem;
 }
 
+.shipyard,
+.shipyard-mirror {
+    flex: 1;
+}
+
+.message {
+    text-align: center;
+}
+
+.msg-content {
+    height: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.ship-form {
+    text-align: center;
+    align-items: center;
+}
+
+#ship-select > label:hover {
+    cursor: pointer;
+}
+
 .grid {
     display: grid;
-    grid-template: repeat(10, 1fr) /repeat(10, fit-content(1.5rem));
-    border: 2px solid grey;
+    grid-template: repeat(12, 1fr) /repeat(11, fit-content(1.5rem));
+    border: 4px solid navy;
     border-radius: 10px;
     padding: 1.5rem;
+    justify-self: center;
+    background-color: slategray;
+    margin-bottom: 10px;
+}
+
+.board-heading {
+    grid-area: 1 / 1 / 1 / 12;
+    font-family: Machine;
+    color: black;
+}
+
+.grid * {
+    text-align: center;
 }
 
 .cell {
-    height: 1.5rem;
-    width: 1.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
     border: 2px solid black;
     background-color: aqua;
+}
+
+.row-label {
+    padding-right: 15px;
 }
 
 .opponent .cell:hover {
@@ -79,12 +254,12 @@ h2 {
 
 .hit {
     background-color: red;
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 .miss {
     background-color: white;
-    opacity: 0.5;
+    opacity: 0.75;
 }
 
 /* Modal */

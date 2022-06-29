@@ -1,3 +1,4 @@
+import domManager from './domManager';
 import ship from './ship';
 
 function gameBoard(size) {
@@ -5,12 +6,17 @@ function gameBoard(size) {
 	const grid = Array.from(Array(size), () => new Array(size).fill(-1));
 	const ships = [];
 	const shipCoordinates = new Array(lengths.length);
-	const horizontals = [];
+	const horizontals = new Array(lengths.length);
 	const missedAttacks = [];
 
-	lengths.forEach((length, index) => {
-		ships.push(ship(index, length));
-	});
+	/* Prepopulate ships */
+	function loadShips() {
+		lengths.forEach((length, index) => {
+			ships.push(ship(index, length));
+		});
+	}
+
+	loadShips();
 
 	function placeShip(coord, shipId, horizontal = true) {
 		const row = coord[0];
@@ -86,15 +92,18 @@ function gameBoard(size) {
 	function clear() {
 		this.grid = Array.from(Array(size), () => new Array(size).fill(-1));
 		this.ships = [];
+		this.shipCoordinates = new Array(lengths.length);
+		this.horizontals = new Array(lengths.length);
 		this.missedAttacks = [];
+		loadShips();
 	}
 
 	return {
+		lengths,
 		grid,
 		ships,
 		shipCoordinates,
 		horizontals,
-		lengths,
 		placeShip,
 		receiveAttack,
 		missedAttacks,

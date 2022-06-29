@@ -1,42 +1,15 @@
 import game from './game';
 
 const domManager = (function () {
-	const start = document.querySelector('.start');
 	const content = document.querySelector('.content');
 	const form = document.querySelector('form');
 	const display = document.querySelector('.display');
 	const battle = document.querySelector('.battle');
+	const messageHead = document.querySelector('.msg-header');
+	const message = document.querySelector('.msg-content');
 	const bgModal = document.querySelector('.bg-modal');
 	const modal = document.querySelector('.modal');
 	const modalClose = document.querySelector('.close');
-
-	function singlePlayerCell() {
-		if (this.classList.contains('hit') || this.classList.contains('miss')) {
-			return;
-		}
-		const row = parseInt(this.getAttribute('row'));
-		const col = parseInt(this.getAttribute('col'));
-		const oppBoard = game.board2;
-		const myBoard = game.board1;
-		const myDisplay = document.querySelectorAll('.board1');
-		const oppDisplay = document.querySelectorAll('.board2');
-		game.player1.playTurn([row, col], oppBoard);
-		oppDisplay.forEach((display) => {
-			displayMissedAttacks(oppBoard, display);
-			displayShipAttacks(oppBoard, display);
-		});
-		game.bot.playTurn(myBoard);
-		myDisplay.forEach((display) => {
-			displayMissedAttacks(myBoard, display);
-			displayShipAttacks(myBoard, display);
-		});
-
-		if (game.gameOver()) {
-			bgModal.style.display = 'block';
-			const message = document.querySelector('.message');
-			message.textContent = 'Game Over';
-		}
-	}
 
 	function container(...classes) {
 		const container = document.createElement('div');
@@ -51,20 +24,87 @@ const domManager = (function () {
 		return element;
 	}
 
-	function createGrid(board) {
+	function placementCell() {
+		const row = parseInt(this.getAttribute('row'));
+		const col = parseInt(this.getAttribute('col'));
+		const checkedOption = document.querySelector('input[name="ship-option"]:checked');
+		const shipIndex = parseInt(checkedOption.value);
+		const horizontal = document.querySelector('input[type="checkbox"]').checked;
+		message.textContent = '';
+		try {
+			game.board1.placeShip([row, col], shipIndex, horizontal);
+		} catch (error) {
+			message.textContent = error;
+			console.log(error);
+		}
+		displayShips(game.board1, document.querySelector('.grid'));
+		const nextShip = game.board1.shipCoordinates.findIndex((element) => element == undefined);
+		if (nextShip == -1) {
+			return;
+		}
+		document.querySelector(`input[type="radio"][value="${nextShip}"]`).checked = true;
+	}
+
+	function cellTurn() {
+		if (this.classList.contains('hit') || this.classList.contains('miss')) {
+			return;
+		}
+		const row = parseInt(this.getAttribute('row'));
+		const col = parseInt(this.getAttribute('col'));
+		const oppBoard = game.board2;
+		const myBoard = game.board1;
+		const myDisplay = document.querySelectorAll('.board1');
+		const oppDisplay = document.querySelectorAll('.board2');
+		/* Player Turn */
+		game.player1.playTurn([row, col], oppBoard);
+		oppDisplay.forEach((display) => {
+			displayMissedAttacks(oppBoard, display);
+			displayShipAttacks(oppBoard, display);
+		});
+
+		/* Bot Turn */
+		game.bot.playTurn(myBoard);
+		myDisplay.forEach((display) => {
+			displayMissedAttacks(myBoard, display);
+			displayShipAttacks(myBoard, display);
+		});
+
+		if (game.gameOver()) {
+			bgModal.style.display = 'block';
+			const message = document.querySelector('.message');
+			message.textContent = 'Game Over';
+		}
+	}
+
+	function createGrid(board, name) {
 		const grid = container('grid');
+		const heading = container('board-heading');
+		heading.textContent = name;
+		grid.append(heading);
+		const rowLabels = 'abcdefghij';
+
+		for (let n = 0; n < 11; n++) {
+			const colLabel = document.createElement('div');
+			colLabel.classList.add('col-label');
+			if (n == 0) {
+				colLabel.textContent = '';
+			} else {
+				colLabel.textContent = `${n}`;
+			}
+			grid.append(colLabel);
+		}
 
 		for (let i = 0; i < board.grid.length; i++) {
+			const rowLabel = document.createElement('div');
+			rowLabel.classList.add('row-label');
+			rowLabel.textContent = rowLabels[i].toUpperCase();
+			grid.append(rowLabel);
 			for (let j = 0; j < board.grid.length; j++) {
 				const cell = cellElement(i, j);
 				grid.append(cell);
 			}
 		}
 		return grid;
-	}
-
-	function displayGrid(container, board) {
-		container.append(createGrid(board));
 	}
 
 	function displayShipAttacks(board, grid) {
@@ -98,21 +138,6 @@ const domManager = (function () {
 		});
 	}
 
-	function placementCell() {
-		const row = parseInt(this.getAttribute('row'));
-		const col = parseInt(this.getAttribute('col'));
-		const checkedOption = document.querySelector('input[name="ship-option"]:checked');
-		const shipIndex = parseInt(checkedOption.value);
-		const horizontal = document.querySelector('input[type="checkbox"]').checked;
-		game.board1.placeShip([row, col], shipIndex, horizontal);
-		displayShips(game.board1, document.querySelector('.grid'));
-		const nextShip = game.board1.shipCoordinates.findIndex((element) => element == undefined);
-		if (nextShip == -1) {
-			return;
-		}
-		document.querySelector(`input[type="radio"][value="${nextShip}"]`).checked = true;
-	}
-
 	function displayShips(board, display) {
 		clearGrid(display);
 		board.shipCoordinates.forEach((coord, id) => {
@@ -142,8 +167,14 @@ const domManager = (function () {
 		bgModal.style.display = 'none';
 	};
 
-	function displayStart() {
-		start.style.display = 'flex';
+	function clearMsg() {
+		messageHead.textContent = '';
+		message.textContent = '';
+	}
+
+	function displayMsg(heading, content = '') {
+		messageHead.textContent = heading;
+		message.textContent = content;
 	}
 
 	/* Eventlisteners */
@@ -152,17 +183,19 @@ const domManager = (function () {
 		game.startGame(name);
 		this.parentElement.style.display = 'none';
 		this.reset();
-		const myGrid = createGrid(game.board1);
+
+		const myGrid = createGrid(game.board1, game.player1.name);
 		myGrid.classList.add('board1');
 		Array.from(myGrid.children).forEach((cell) => {
 			cell.addEventListener('click', placementCell);
 		});
 		display.append(myGrid);
+		display.append(container('shipyard-mirror'));
 		content.style.display = 'flex';
 		e.preventDefault();
 	});
 
-	battle.addEventListener('click', () => {
+	battle.addEventListener('click', function () {
 		if (game.board1.shipCoordinates.includes(undefined)) {
 			console.log('Must place all ships first');
 			return;
@@ -173,12 +206,17 @@ const domManager = (function () {
 			cell.removeEventListener('click', placementCell);
 		});
 
-		const oppGrid = createGrid(game.board2);
+		const oppGrid = createGrid(game.board2, 'computer');
 		oppGrid.classList.add('board2');
 		Array.from(oppGrid.children).forEach((cell) => {
-			cell.addEventListener('click', singlePlayerCell);
+			cell.addEventListener('click', cellTurn);
 		});
 		display.prepend(oppGrid);
+		this.style.display = 'none';
+		document.querySelector('.shipyard').style.display = 'none';
+		document.querySelector('.shipyard-mirror').style.display = 'none';
+		document.querySelector('.display').style.flexDirection = 'column';
+		displayMsg('Battle!');
 	});
 
 	/* Modal Functions */
@@ -192,10 +230,8 @@ const domManager = (function () {
 	});
 
 	return {
-		displayGrid,
-		displayShips,
-		clearGrid,
-		closeModal
+		displayMsg,
+		clearMsg
 	};
 })();
 

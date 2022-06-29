@@ -1,11 +1,18 @@
+import domManager from './domManager';
 import gameBoard from './gameBoard';
 
 export function player(id, name) {
 	const boardSize = 10;
 	const myBoard = gameBoard(boardSize);
 	function playTurn(coord, oppBoard) {
-		oppBoard.receiveAttack(coord);
+		let a = oppBoard.receiveAttack(coord);
+		if (a) {
+			domManager.displayMsg('Battle!', 'Aww, you missed...');
+		} else {
+			domManager.displayMsg('Battle!', "Yeah baby, that's a hit!");
+		}
 	}
+
 	return {
 		id,
 		name,

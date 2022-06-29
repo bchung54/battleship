@@ -11,9 +11,9 @@
 <body>
   <header><h1>Battleship</h1></header>
   <div class="start">
-    <form class="name-form">
-      <label for="player-name">Player Name</label>
-      <input type="text" id="player-name" placeholder="Enter Name" required>
+    <form class="name-form" autocomplete="off">
+      <label for="player-name">Enter Player Name</label>
+      <input type="text" id="player-name" required>
       <input type="submit" value="Start Game">
     </form>
   </div>
@@ -26,64 +26,27 @@
       <div class="shipyard">
         <form class="ship-form">
           <fieldset id="ship-select">
-            <label>Patrol Boat(2)<input type="radio" value="0" name="ship-option" checked></label>
-            <label>Destroyer(3)<input type="radio" value="1" name="ship-option"></label>
-            <label>Submarine(3)<input type="radio" value="2" name="ship-option"></label>
-            <label>Battleship(4)<input type="radio" value="3" name="ship-option"></label>
-            <label>Cruiser(5)<input type="radio" value="4" name="ship-option"></label>
+            <input type="radio" id="patrol" value="0" name="ship-option" checked>
+            <label for="patrol">Patrol Boat(2)</label>
+            <input type="radio" id="destroyer" value="1" name="ship-option">
+            <label for="destroyer">Destroyer(3)</label>
+            <input type="radio" id="submarine" value="2" name="ship-option">
+            <label for="submarine">Submarine(3)</label>
+            <input type="radio" id="battleship" value="3" name="ship-option">
+            <label for="battleship">Battleship(4)</label>
+            <input type="radio" id="cruiser" value="4" name="ship-option">
+            <label for="cruiser">Cruiser(5)</label>
           </fieldset>
-          <label>Vertical<input type="checkbox">Horizontal</label>
+          <label class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <div class="orientation">Vertical/Horizontal</div>
         </form>
       </div>
     </div>
     <button class="battle">Start Battle</button>
-    <!-- <form class="place-ships">
-      <div>
-        <label for="ship1">Coordinates for Patrol Boat (size: 2)</label>
-        <input type="text" id="ship1" placeholder="A1" pattern="[a-jA-J]\d">
-        <label for="orientation1">Check for horizontal (otherwise vertical)</label>
-        <input type="checkbox" id="orientation1">
-      </div>
-
-      <div>
-        <label for="ship2">Coordinates for Destroyer (size: 3)</label>
-        <input type="text" id="ship2" placeholder="B2" pattern="[a-jA-J]\d">
-        <label for="orientation2">Check for horizontal (otherwise vertical)</label>
-        <input type="checkbox" id="orientation2">
-      </div>
-
-      <div>
-        <label for="ship3">Coordinates for Submarine (size: 3)</label>
-        <input type="text" id="ship3" placeholder="C3" pattern="[a-jA-J]\d">
-        <label for="orientation3">Check for horizontal (otherwise vertical)</label>
-        <input type="checkbox" id="orientation3">
-      </div>
-
-      <div>
-        <label for="ship4">Coordinates for Battleship (size: 4)</label>
-        <input type="text" id="ship4" placeholder="D4" pattern="[a-jA-J]\d">
-        <label for="orientation4">Check for horizontal (otherwise vertical)</label>
-        <input type="checkbox" id="orientation4">
-      </div>
-
-      <div>
-        <label for="ship5">Coordinates for Cruiser (size: 5)</label>
-        <input type="text" id="ship5" placeholder="F5" pattern="[a-jA-J]\d">
-        <label for="orientation5">Check for horizontal (otherwise vertical)</label>
-        <input type="checkbox" id="orientation5">
-      </div>
-      <input type="submit" value="Start Game">
-    </form> -->
   </div>
-
-<!--   <div class="content">
-    <div id="player1" class="player">
-      <h2>Player 1</h2>
-    </div>
-    <div id="player2" class="player">
-      <h2>Player 2</h2>
-    </div>
-  </div> -->
 
   <div class="bg-modal">
     <div class="modal">

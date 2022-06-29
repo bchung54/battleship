@@ -1,4 +1,3 @@
-import domManager from './domManager';
 import gameBoard from './gameBoard';
 import { player, bot } from './player';
 
